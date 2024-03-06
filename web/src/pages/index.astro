@@ -21,9 +21,14 @@ const ApiServer = import.meta.env.API_SERVER;
 
 		<br>
 
-		<button id="reload-list" hx-get={"/partials/todo/TodoList"} hx-target="#data">Get All</button>
+		<button id="reload-list"
+				hx-get={"/partials/todo/TodoList"}
+				hx-target="#data">Get All</button>
 
-		<form hx-post={ApiServer + "/todo"} hx-swap="none" hx-vals="{input: ''}" hx-on:htmx:after-request="reloadTodo()">
+		<form hx-post={ApiServer + "/todo"}
+			  hx-swap="none"
+			  hx-vals="{input: ''}"
+			  hx-on:htmx:after-request="reloadTodo()">
 			<input type="text" name="name" placeholder="Name">
 			<button type="submit">Create</button>
 		</form>
