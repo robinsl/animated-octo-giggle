@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TodoList from "./partials/todo/TodoList.astro";
+const ApiServer = import.meta.env.API_SERVER;
+---
+
+<script is:inline>
+	function reloadTodo() {
+		console.log("releoad todo")
+		htmx.ajax('GET', '/partials/todo/TodoList', {target:'#data', swap:'innerHTML'});
+	}
+</script>
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<h1>Setup Astro + htmx</h1>
+
+		<div id="data">
+			<TodoList />
+		</div>
+
+		<br>
+
+		<button id="reload-list" hx-get={"/partials/todo/TodoList"} hx-target="#data">Get All</button>
+
+		<form hx-post={ApiServer + "/todo"} hx-swap="none" hx-vals="{input: ''}" hx-on:htmx:after-request="reloadTodo()">
+			<input type="text" name="name" placeholder="Name">
+			<button type="submit">Create</button>
+		</form>
+
+	</main>
+</Layout>
+
+
+<style>
+	h1, div {
+		color: white;
+	}
+</style>

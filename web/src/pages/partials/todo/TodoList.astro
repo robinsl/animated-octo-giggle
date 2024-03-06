@@ -1,0 +1,23 @@
+---
+import TodoItem from "../../../components/TodoItem.astro";
+export const partial = true
+
+const ApiServer = import.meta.env.API_SERVER;
+const response = await fetch(`${ApiServer}/todo`);
+const todos = await response.json();
+---
+
+<table>
+    <thead>
+        <tr>
+            <td>state</td>
+            <td>title</td>
+            <td>action</td>
+        </tr>
+    </thead>
+    <tbody>
+    {todos.map(todo => (
+        <TodoItem todo={todo} />
+    ))}
+</table>
+

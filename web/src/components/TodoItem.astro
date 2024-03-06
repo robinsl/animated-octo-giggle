@@ -1,0 +1,18 @@
+---
+const {todo} = Astro.props
+
+const {id, name, completed} = todo
+const rowId = `todo_row_${id}`
+
+const ApiServer = import.meta.env.API_SERVER;
+---
+
+<tr id={rowId}>
+    <td>
+        <input type="checkbox" checked={completed} hx-put={`${ApiServer}/todo/${id}`} hx-trigger="change" />
+    </td>
+    <td>{todo.name}</td>
+    <td>
+        <button hx-delete={`${ApiServer}/todo/${id}`} hx-target={`#${rowId}`} hx-confirm="Are you sure?" class="btn btn-danger" hx-swap="delete">Delete</button>
+    </td>
+</tr>
